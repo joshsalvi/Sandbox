@@ -1,9 +1,18 @@
-import math as m
 import numpy as num
-import matplotlib.pyplot as p
 
-x = num.linspace(0,10,10000)
-y = num.sin(x)
 
-p.plot(x,y)
-p.show()
+def pltsinx(nums):
+
+    import numpy as num
+    import matplotlib.pyplot as pypl
+
+    pypl.plot(nums, num.sin(nums))
+    pypl.show()
+
+    print "First 10 elements of x: %s" % (str(nums[0:10]))
+    print "First 10 elements of y: %s" % (str(num.sin(nums[0:10])))
+
+
+
+pltsinx(num.linspace(0, 100, 100000))
+
