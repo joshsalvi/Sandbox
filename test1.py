@@ -9,8 +9,8 @@ def pltsinx(nums):
     pypl.plot(nums, num.sin(nums))
     pypl.show()
 
-    print "First 10 elements of x: %s" % (str(nums[0:10]))
-    print "First 10 elements of y: %s" % (str(num.sin(nums[0:10])))
+    print "First 10 elements of x: %s" % (str(nums[0:9]))
+    print "First 10 elements of y: %s" % (str(num.sin(nums[0:9])))
 
 
 
