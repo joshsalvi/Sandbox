@@ -5,6 +5,8 @@ __author__ = 'joshsalvi'
 class seqanalyze(object):
     def __init__(self, seq):
         self.seq = seq
+        for ind in range(0, len(self.seq)):
+            self.seq[ind] = self.seq[ind].lower()
 
     def GCcontent(self):
         from numpy import zeros
@@ -26,6 +28,19 @@ class seqanalyze(object):
             print 'Sequence %d has an AT content of %f' % (ind + 1, self.ATcont[ind])  # Print the result
         return self.ATcont
 
+    def findcomplement(self):
+        self.complement = {}
+        for ind in range(0, len(self.seq)):
+            self.complement[ind] = self.seq[ind].lower()
+            self.complement[ind] = self.complement[ind].replace('a', '-')
+            self.complement[ind] = self.complement[ind].replace('t', 'a')
+            self.complement[ind] = self.complement[ind].replace('-', 't')
+            self.complement[ind] = self.complement[ind].replace('g', '-')
+            self.complement[ind] = self.complement[ind].replace('c', 'g')
+            self.complement[ind] = self.complement[ind].replace('-', 'c')
+        return self.complement
+
+
 
 # Define a number of sequences, as many as you'd like
 sequence = {}
@@ -36,6 +51,14 @@ sequence[
 sequence[
     2] = 'agttgctaggcaaccacagctgcgggcgtggtctgcgcggggttgccctcctgttctggtttatcaggggatccccaaagaaagcaaggggaccaaggccgggactgctggggtgaaggtccgggaggctgagtaaggggacggaagggcacaggccatggaaaggaatgacatcatcaacttcaaggctttggagaaagagctgcaggctgcactcactgctgatgagaagtacaaacgggagaatgctgccaagttacgggcagtggaacagagggtggcttcctatgaggagttcaggggtattgtccttgcatcacatctgaagccactggagcggaaggataagatgggaggaaagagaactgtgccctggaactgtcacactattcagggaaggaccttccaggatgtggccactgaaatctccccggagaaagcccccctccagcccgagacgtctgctgacttctatcgtgattggcgacgacacttgccaagtgggccagagcgctaccaggctctactgcagcttgggggtccaaggctcggctgcctcttccagacagatgtgggatttggacttcttggggagctgctggtggcactggctgatcacgtggggccggctgaccgggcagcggtgctggggatcctatgcagcctggcgagcactgggcgcttcaccctgaacctaagcctgctgagccgggcagagagagagagctgcaagggcttgtttcagaagctgcaagccatgggcaaccccagatccgtgaaggaggggctcagctgggaggagcagggtctggaggagcagtctggtgggctccaggaggaggagaggctcctgcaggagctgctggagctgtaccaggttgactgatgcggcaagctaccctcagaggtcccagtggtcactggaggcagttttttggttgttgtcttgggggttctgcaggaccataataagaaacccacacctggttcccttctcaacttggaattttcagagcaaaaacaggaatcaagtcttccccacttctccagtccctcagtgtctcgctgttttgaactgtgtgtatccatggacagtcaagagctcaggaagttgagagcggttttgtttcccacccttagagtctgccaagcctctagcccactggccttgagagatgagtgtgtgcccaaccaaatgctggctataccagttacagcctccactcataaaagggaaaaagcaaaatctttatggtaaacaaacactgatctccacagctcttaacaagaatgtttatagccccaaaccaatgaatggacatgtaatcaacaaatgatcaaatactacatcatttgaggtgttgaattttcccctagagactcagttcttgtgcaggttgggcctgggaaagtcccaagccatcagctcaggtccagccagcctcccggatggccagatatgcaggagggt'
 
+# Define a sequences object of class seqanalyze
 sequences = seqanalyze(sequence)
+
+# Calculate GC content, AT content, and find the complement
 sequences.GCcontent()
 sequences.ATcontent()
+sequences.findcomplement()
+
+# Print a sequence and its complement
+print sequences.seq[1]
+print sequences.complement[1]
