@@ -1,14 +1,8 @@
-def median(list):
-    result = 0.0
-    list.sort()
-    if len(list) == 1:
-        result = list[0]
-    elif len(list) % 2 == 1:
-        result = list[len(list)/2]
+def check_bit4(input):
+    mask = 0b1000
+    if input & mask > 0:
+        return "on"
     else:
-        result = float(sum([list[len(list)/2-1], list[len(list)/2]]))
-        result /= 2
-    return result
+        return "off"
 
-
-print median([4,5,5,4])
+print check_bit4(4)
