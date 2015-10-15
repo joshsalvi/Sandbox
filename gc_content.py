@@ -1,3 +1,6 @@
+__author__ = 'joshsalvi'
+
+
 # Find all instances of G and C, return the GC content (0-1)
 # All of the work is on Line 4
 def GContent(seq):
