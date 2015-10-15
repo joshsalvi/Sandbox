@@ -3,11 +3,11 @@ def is_prime(x):
         return False
     elif x == 2:
         return True
-    elif isinstance(x, int) == False:
+    elif not isinstance(x, int):
         return False
     else:
         counter = [0] * (x-2)
-        for n in range(2,x):
+        for n in range(2, x):
             if x % n == 0:
                 counter[n-2] = 0
             else:
