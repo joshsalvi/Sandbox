@@ -1,5 +1,7 @@
-# Find all instances of G and C, return the GC content (0-1)
-# All of the work is on Line 4
+__author__ = 'joshsalvi'
+
+
+# Define a seqanalyze class
 class seqanalyze(object):
     def __init__(self, seq):
         self.seq = seq
