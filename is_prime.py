@@ -16,3 +16,10 @@ def is_prime(x):
             return False
         else:
             return True
+
+
+print "IS IT PRIME?"
+for j in range(0, 10, 1):
+    print "%d...%s" % (j, is_prime(j))
+else:
+    print "Finished"
