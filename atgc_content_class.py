@@ -31,13 +31,9 @@ class seqanalyze(object):
     def findcomplement(self):
         self.complement = {}
         for ind in range(0, len(self.seq)):
-            self.complement[ind] = self.seq[ind].lower()
-            self.complement[ind] = self.complement[ind].replace('a', '-')
-            self.complement[ind] = self.complement[ind].replace('t', 'a')
-            self.complement[ind] = self.complement[ind].replace('-', 't')
-            self.complement[ind] = self.complement[ind].replace('g', '-')
-            self.complement[ind] = self.complement[ind].replace('c', 'g')
-            self.complement[ind] = self.complement[ind].replace('-', 'c')
+            from string import maketrans
+            basecomplement = maketrans('ATGC', 'TACG')
+            self.complement[ind] = self.seq[ind].translate(basecomplement)[::-1]
         return self.complement
 
 
