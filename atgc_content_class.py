@@ -6,7 +6,7 @@ class seqanalyze(object):
     def __init__(self, seq):
         self.seq = seq
         for ind in range(0, len(self.seq)):
-            self.seq[ind] = self.seq[ind].lower()
+            self.seq[ind] = self.seq[ind].upper()
 
     def GCcontent(self):
         from numpy import zeros
@@ -36,15 +36,55 @@ class seqanalyze(object):
             self.complement[ind] = self.seq[ind].translate(basecomplement)[::-1]
         return self.complement
 
+    def transcribe(self):
+        from string import maketrans
+        self.RNA = {}
+        for ind in range(0, len(self.seq)):
+            basecomplement = maketrans('ATGC', 'TACG')
+            self.RNA[ind] = self.seq[ind].translate(basecomplement)[::-1]
+            self.RNA[ind] = self.RNA[ind].replace('T', 'U')
+        return self.complement
+
+    def translate(self):
+        codontable = {
+            'ATA': 'I', 'ATC': 'I', 'ATT': 'I', 'ATG': 'M',
+            'ACA': 'T', 'ACC': 'T', 'ACG': 'T', 'ACT': 'T',
+            'AAC': 'N', 'AAT': 'N', 'AAA': 'K', 'AAG': 'K',
+            'AGC': 'S', 'AGT': 'S', 'AGA': 'R', 'AGG': 'R',
+            'CTA': 'L', 'CTC': 'L', 'CTG': 'L', 'CTT': 'L',
+            'CCA': 'P', 'CCC': 'P', 'CCG': 'P', 'CCT': 'P',
+            'CAC': 'H', 'CAT': 'H', 'CAA': 'Q', 'CAG': 'Q',
+            'CGA': 'R', 'CGC': 'R', 'CGG': 'R', 'CGT': 'R',
+            'GTA': 'V', 'GTC': 'V', 'GTG': 'V', 'GTT': 'V',
+            'GCA': 'A', 'GCC': 'A', 'GCG': 'A', 'GCT': 'A',
+            'GAC': 'D', 'GAT': 'D', 'GAA': 'E', 'GAG': 'E',
+            'GGA': 'G', 'GGC': 'G', 'GGG': 'G', 'GGT': 'G',
+            'TCA': 'S', 'TCC': 'S', 'TCG': 'S', 'TCT': 'S',
+            'TTC': 'F', 'TTT': 'F', 'TTA': 'L', 'TTG': 'L',
+            'TAC': 'Y', 'TAT': 'Y', 'TAA': '_', 'TAG': '_',
+            'TGC': 'C', 'TGT': 'C', 'TGA': '_', 'TGG': 'W',
+        }
+        self.protein = {}
+        for ind in range(0, len(self.seq)):
+            start = self.seq[ind].find('ATG')
+            seqstart = self.seq[ind][int(start):]
+            stop = seqstart.find('TAA')
+            cds = str(seqstart[:int(stop) + 3])
+            self.protein[ind] = ''
+            for n in range(0, len(cds), 3):
+                if cds[n:n + 3] in codontable:
+                    self.protein[ind] += codontable[cds[n:n + 3]]
+        return self.protein
+
 
 
 # Define a number of sequences, as many as you'd like
 sequence = {}
 sequence[
-    0] = 'NNNGTCGCTGCTCCGGCCGCCATGGCGGCCGCGGGAATTCGATTCAAACGCAGATACACCCCTAATCTGATCTCTGCAGCCAGTTCTCC' \
+    0] = 'ATGGCGCTCCGATGCGCCATGGCGGCCGCGGGAATTCGATAGTCAAACGCAGATACACCCCTCTGGGATCGGTTCAGCCGGTTCTCGCC' \
          'TTGGATCCAACAGAAATAGGAGCCTTTATCTTCCAGCTGCACAGGCGTGAAGTGTAGATGGTGACCGCTGTCAATGAAGACCCGAGACG' \
          'TCCTATTCAGCCCCTCCATATACTGAGATAGATAAAGCGGCTTTGAGCCTTTATCCCAGGCCACTGCATACTGCGGTTTGGCACCAGGA' \
-         'CAAATCAGGACCAGATCAGAGTCTGTGGGGTGGTTGTAGAAGTGGATGGAAACCCCTGAAGAAGCTTGATCTTCAATCTCAAGGAACTT' \
+         'CAAATCAGGACCAGATCAGAGTCTGTGGGGTGGTTGTAGAAGTGGATGGAAAACCCCTGAAGAAGCTTGATCTTCAATCTCAAGGACTT' \
          'CATTAGAGCTTGTCTCTCTGGATATACTTTAGGTTTTGGAGGACAGGTGGCATGACAGTCCCTCACCTCAAGCTCAGCTCCGTAGCTGC' \
          'TGCCTGAAAGGCCAAATTGTAAAGGAACAGCTGAGGAACCGCAGGGAGCCTCTGTCTCTGAATCACTCTGATAACGTACCTGAAGGTAG' \
          'ATGCTTTTGACAAAACAAAGTCCTACACGGGTCTGCTCACCCTGGATGTCACAACGGTCACATTTAGACCATGACTGGTGCCGCGTGAA' \
@@ -52,26 +92,26 @@ sequence[
          'CGTAGCCGTAGAAGAATTCACCAGAGGCCGTGCCACAGATGTAGTGGCCCGAGTCGGCTTTCTGGACCCTGAAGATGAGAAGGCTAAAC' \
          'AAGCGAATCACTAGTGAATTCGCGGCCGCCTGCAGGTCGACCATATGGGAGAGCTCCCAACGCGTTGGATGCATAGCTTGAGTATTCTA' \
          'TAGTGTCACCTAAATAGCTTGCGTAATCATGGTCATAGCTGTTTCCTGTGTGAAATTGTTATCCGCTCACAATTCCACACAACATACGA' \
-         'GCCGGAAGCATAAAGTGTAAAGCCTGGGGTGCCTAATGAGTGAGCTAACTCACATTAATTGCGTTGCG'
+         'GCCGGAAGCATAAAGTGTAAAGCCTGGGGTGCCTAATGAGTGAGCTAACTCACATTAATTGCGTTGCCCGTAA'
 sequence[
-    1] = 'GTCGAGTCGCTGCTCCGGCCGCCATGGCGGCCGCGGGATTCGATTCGTCCTATTCAGCCCCTCCATATACTGAGATAGATAAAGCGGCT' \
-         'TTGAGCCTTTATCCCAGGCCACTGCATACTGCGGTTTGGCACCAGGACAAATCAGGACCAGATCAGAGTCTGTGGGGTGGTTGTAGAAG' \
+    1] = 'GTCGAGTCGCTGCTCCGGCCCGCCATGGGGCCGCGGGATTCGATTCGTCCTATTCAGCCCCTCCATATACTGAGATAGAAGCGCCGGCT' \
+         'TTGAGCCTTTATCCCAGGCCACATGTGCATACTGCGGTTTGGCACCAGGACAAATCAGGACCAGATCAGAGTCTGTGGGGTTGTAGAAG' \
          'TGGATGGAAACCCCTGAAGAAGCTTGATCTTCAATCTCAAGGAACTTCATTAGAGCTTGTCTCTCTGGATATACTTTAGGTTTTGGAGG' \
          'ACAGGTGGCATGACAGTCCCTCACCTCAAGCTCAGCTCCGTAGCTGCTGCCTGAAAGGCCAAATTGTAAAGGAACAGCTGAGGAACCGC' \
          'AGGGAGCCTCTGTCTCTGAATCACTCTGATAACGTACCTGAAGGTAGATGCTTTTGACAAAACAAAGTCCTACACGGGTCTGCTCACCC' \
          'CGGATGTCACAACGGTCACATTTAGACCATGACTGGTGCCGCGTGAACACCTGAAACATCTTTGCATCCTCTGCTTGAGTTCTCCGGTT' \
-         'GAGGTTCCAGGGAAATAAAACGTGTCGGACCAACTGGACGTCAACATCGTAGCCGTAGAAGAATTCACCAGAGGCCGTGCCACAGATGT' \
-         'AGTGGCCCGAGTCGGCTTTCTGGACCCTGAAGATGAGAAGGCTAAACAAGCGAATCACTAGTGAATTCGCGGCCGCCTGCAGGTCGACC' \
+         'GAGGTTCCAGGGAAATAAAACGTGTCGGACCAACTGGAGTCAACATCGTAGCCGTAGAAGAATTCACCAGAGGCCGTGCCACAGATGTC' \
+         'AGTGGCCCGAGTCGGCTTTCTGGACCCTGAAGATGAGAAGGCTAAACAAGCGATAAATCACTAGTGAATTCGCCGCCTGCAGGTCGACC' \
          'ATATGGGAGAGCTCCCAACGCGTTGGATGCATAGCTTGAGTATTCTATAGTGTCACCTAAATAGCTTGGCGTAATCATGGTCATAGCTG' \
          'TTTCCTGTGTGAAATTGTTATCCGCTCACAATTCCACACAACATACGAGCCGGAAGCATAAAGTGTAAAGCCTGGGGTGCCTAATGAGT' \
          'GAGCTAACTCACATTAATTGCGTTGCGCTCACTGCTCGCTTTCCAGTCGGGAAACCTGTCGTGTAGCTGCATTAATGAATCGGTAACGC' \
          'GCGGGGAGAGGCGGTTGCGTATGGGCGCTCTTCGCTTCTCGCTCACTGACTCGCTGCGCTCGGTCGTC'
 sequence[
     2] = 'agttgctaggcaaccacagctgcgggcgtggtctgcgcggggttgccctcctgttctggtttatcaggggatccccaaagaaagcaagg' \
-         'ggaccaaggccgggactgctggggtgaaggtccgggaggctgagtaaggggacggaagggcacaggccatggaaaggaatgacatcatc' \
+         'ggaccaaggccgggactgctggggtgaaggtccgggaggctgagtaaggggacggaacgggggcacaggccatggaggaatgacatcatc' \
          'aacttcaaggctttggagaaagagctgcaggctgcactcactgctgatgagaagtacaaacgggagaatgctgccaagttacgggcagt' \
          'ggaacagagggtggcttcctatgaggagttcaggggtattgtccttgcatcacatctgaagccactggagcggaaggataagatgggag' \
-         'gaaagagaactgtgccctggaactgtcacactattcagggaaggaccttccaggatgtggccactgaaatctccccggagaaagccccc' \
+         'gaaagagaactgtgccctggaatgactgtcacactattcagggaaggaccttccaggatgccactgaaatctccccggagaaagccccc' \
          'ctccagcccgagacgtctgctgacttctatcgtgattggcgacgacacttgccaagtgggccagagcgctaccaggctctactgcagct' \
          'tgggggtccaaggctcggctgcctcttccagacagatgtgggatttggacttcttggggagctgctggtggcactggctgatcacgtgg' \
          'ggccggctgaccgggcagcggtgctggggatcctatgcagcctggcgagcactgggcgcttcaccctgaacctaagcctgctgagccgg' \
@@ -83,7 +123,7 @@ sequence[
          'gcccactggccttgagagatgagtgtgtgcccaaccaaatgctggctataccagttacagcctccactcataaaagggaaaaagcaaaa' \
          'tctttatggtaaacaaacactgatctccacagctcttaacaagaatgtttatagccccaaaccaatgaatggacatgtaatcaacaaat' \
          'gatcaaatactacatcatttgaggtgttgaattttcccctagagactcagttcttgtgcaggttgggcctgggaaagtcccaagccatc' \
-         'agctcaggtccagccagcctcccggatggccagatatgcaggagggt'
+         'agctcaggtccagccagcctcccggatggccagatattaagcaggagggt'
 
 # Define a sequences object of class seqanalyze
 sequences = seqanalyze(sequence)
@@ -92,11 +132,20 @@ sequences = seqanalyze(sequence)
 sequences.GCcontent()
 sequences.ATcontent()
 sequences.findcomplement()
+sequences.transcribe()
+sequences.translate()
+
 
 # Print a sequence and its complement
 from textwrap import fill
 
-print "SEQUENCE:"
-print fill(sequences.seq[1], 100) + '\n'
-print "COMPLEMENT:"
-print fill(sequences.complement[1], 100)
+indcheck = 1
+
+print "\n---------SEQUENCE---------"
+print fill(sequences.seq[indcheck], 100) + "\n--------------------------"
+print "\n--------COMPLEMENT--------"
+print fill(sequences.complement[indcheck], 100) + "\n--------------------------"
+print "\n-----------RNA------------"
+print fill(sequences.RNA[indcheck], 100) + "\n--------------------------"
+print "\n---------PROTEIN----------"
+print fill(sequences.protein[indcheck], 25) + "\n--------------------------"

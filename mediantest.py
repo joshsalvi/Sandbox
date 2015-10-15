@@ -5,4 +5,6 @@ def check_bit4(input):
     else:
         return "off"
 
-print check_bit4(4)
+
+print check_bit4(0b0001)
+print check_bit4(0b1001)
