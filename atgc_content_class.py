@@ -29,9 +29,9 @@ class seqanalyze(object):
         return self.ATcont
 
     def findcomplement(self):
+        from string import maketrans
         self.complement = {}
         for ind in range(0, len(self.seq)):
-            from string import maketrans
             basecomplement = maketrans('ATGC', 'TACG')
             self.complement[ind] = self.seq[ind].translate(basecomplement)[::-1]
         return self.complement
