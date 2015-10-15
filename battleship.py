@@ -43,5 +43,4 @@ for turn in range(4):
             else:
                 print "You missed my battleship!"
                 board[guess_row][guess_col] = "X"
-        # Print (turn + 1) here!
-        print_board(board)
+                print_board(board)
