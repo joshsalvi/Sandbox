@@ -23,13 +23,13 @@ xdW = math.sqrt(Dt) * num.random.randn(N)
 ydW = math.sqrt(Dt) * num.random.randn(N)
 
 # Initialize the variables
-xdet = num.zeros(N);
+xdet = num.zeros(N)
 xdet[0] = xzero
-ydet = num.zeros(N);
+ydet = num.zeros(N)
 ydet[0] = yzero
-xsto = num.zeros(N);
+xsto = num.zeros(N)
 xsto[0] = xzero
-ysto = num.zeros(N);
+ysto = num.zeros(N)
 ysto[0] = yzero
 
 for ind in range(1, N):
