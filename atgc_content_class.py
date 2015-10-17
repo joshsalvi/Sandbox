@@ -1,6 +1,5 @@
 __author__ = 'joshsalvi'
 
-
 # Define a seqanalyze class
 class seqanalyze(object):
     def __init__(self, seq):
@@ -108,7 +107,7 @@ sequence[
          'GCGGGGAGAGGCGGTTGCGTATGGGCGCTCTTCGCTTCTCGCTCACTGACTCGCTGCGCTCGGTCGTC'
 sequence[
     2] = 'agttgctaggcaaccacagctgcgggcgtggtctgcgcggggttgccctcctgttctggtttatcaggggatccccaaagaaagcaagg' \
-         'ggaccaaggccgggactgctggggtgaaggtccgggaggctgagtaaggggacggaacgggggcacaggccatggaggaatgacatcatc' \
+         'ggaccaaggccgggactgctggggtgaaggccgggaggctgagtaaggggacggaacgggggcacaggccatggaggaatgacatcatc' \
          'aacttcaaggctttggagaaagagctgcaggctgcactcactgctgatgagaagtacaaacgggagaatgctgccaagttacgggcagt' \
          'ggaacagagggtggcttcctatgaggagttcaggggtattgtccttgcatcacatctgaagccactggagcggaaggataagatgggag' \
          'gaaagagaactgtgccctggaatgactgtcacactattcagggaaggaccttccaggatgccactgaaatctccccggagaaagccccc' \
@@ -139,7 +138,7 @@ sequences.translate()
 # Print a sequence and its complement
 from textwrap import fill
 
-indcheck = 1
+indcheck = 2
 
 print "\n---------SEQUENCE---------"
 print fill(sequences.seq[indcheck], 100) + "\n--------------------------"
@@ -150,7 +149,7 @@ print fill(sequences.RNA[indcheck], 100) + "\n--------------------------"
 print "\n---------PROTEIN----------"
 print fill(sequences.protein[indcheck], 25) + "\n--------------------------"
 
-
+"""
 # Compare with translation from Biopython
 from Bio.Seq import Seq
 from Bio.Alphabet import IUPAC
@@ -161,3 +160,5 @@ strt = protein2.find('M')  # start
 stop = protein2.find('*')  # stop
 protein2 = str(protein2[strt:len(sequences.protein[indcheck]) + strt])
 print fill(protein2, 25) + "\n--------------------------"
+
+"""

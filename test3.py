@@ -1,16 +1,30 @@
-class Shape(object):
-    """Makes shapes!"""
-    def __init__(self, number_of_sides):
-        self.number_of_sides = number_of_sides
-
-# Add your Triangle class below!
-class Triangle(Shape):
-    number_of_sides = 3
-    def __init__(self,side1,side2,side3):
-        self.side1=side1
-        self.side2=side2
-        self.side3=side3
+import math as mth
 
 
-triangle = Triangle(12,13,2)
-print triangle.number_of_sides
+def formula_calc():
+    items = [x for x in raw_input().split(',')]
+    Q = []
+    C = 50
+    H = 30
+    for value in items:
+        Q.append(str(int(round(mth.sqrt((2 * C * float(value)) / H)))))
+    return Q
+
+
+print formula_calc()
+
+
+def yrange(x):
+    ind = 0
+    while ind < x:
+        yield ind
+        ind += 1
+    else:
+        yield ind
+
+
+y = yrange(10)
+
+print y.next()
+print y.next()
+print y.next()
