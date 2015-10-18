@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as num
 
 
+
 # self, mu, noiseSTD, tvec = argv
 
 tvec = num.linspace(0, 10, 1000)
