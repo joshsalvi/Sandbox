@@ -1,19 +1,37 @@
-def checkio(a, b, c):
-    import math
-    angles = [0, 0, 0]
-    if (c ** 2 - b ** 2 - a ** 2) / (-2.0 * a * b) >= -1 and (a ** 2 - c ** 2 - b ** 2) / (-2.0 * b * c) >= -1 and (
-                b ** 2 - a ** 2 - c ** 2) / (-2.0 * c * a) >= -1:
-        angles[0] = round(math.degrees(math.acos((c ** 2 - b ** 2 - a ** 2) / (-2.0 * a * b))))
-        angles[1] = round(math.degrees(math.acos((a ** 2 - c ** 2 - b ** 2) / (-2.0 * b * c))))
-        angles[2] = round(math.degrees(math.acos((b ** 2 - a ** 2 - c ** 2) / (-2.0 * c * a))))
-    if 0 in angles:
-        angles = [0, 0, 0]
-    return sorted(angles)
+VOWELS = "AEIOUY"
+CONSONANTS = "BCDFGHJKLMNPQRSTVWXZ"
 
+
+def checkio(text):
+    text = text.replace(',', ' ')
+    text = text.replace('.', ' ')
+    text = text.upper()
+    text = text.split(' ')
+    counter = 0
+    for ind in range(0, len(text)):
+        for indL in range(0, len(text[ind])):
+            if indL == 0 and text[ind][indL] in VOWELS:
+                letter = 'V'
+            elif indL == 0 and text[ind][indL] in CONSONANTS:
+                letter = 'C'
+            elif letter == 'C' and text[ind][indL] in VOWELS:
+                letter = 'V'
+            elif letter == 'V' and text[ind][indL] in CONSONANTS:
+                letter = 'C'
+            else:
+                letter = 'X'
+        if len(text[ind]) < 2:
+            letter = 'X'
+        if letter == 'C' or letter == 'V':
+            counter += 1
+    return counter
+
+
+print checkio("A quantity of striped words.")
 
 # These "asserts" using only for self-checking and not necessary for auto-testing
 if __name__ == '__main__':
-    # assert checkio(4, 4, 4) == [60, 60, 60], "All sides are equal"
-    # assert checkio(3, 4, 5) == [37, 53, 90], "Egyptian triangle"
-    assert checkio(2, 2, 5) == [0, 0, 0], "It's can not be a triangle"
-    assert checkio(10, 20, 30) == [0, 0, 0]
+    assert checkio("My name is ...") == 3, "All words are striped"
+    assert checkio("Hello world") == 0, "No one"
+    assert checkio("A quantity of striped words.") == 1, "Only of"
+    assert checkio("Dog,cat,mouse,bird.Human.") == 3, "Dog, cat and human"
