@@ -7,4 +7,10 @@ def anti_vowel(text):
     assert isinstance(result, str)
     return result
 
-print anti_vowel('Canaries RUN VERY FAR!')
+
+if __name__ == '__main__':
+    assert anti_vowel('Canaries RUN VERY FAR!') == 'Cnrs RN VRY FR!'
+    assert anti_vowel(
+        'Pablo Escobar was a very bad man, but it was a beautiful story!') == 'Pbl scbr ws  vry bd mn, bt t ws  btfl ' \
+                                                                              'stry!'
+    assert anti_vowel('I\'m Ron Burgundy?') == '\'m Rn Brgndy?'

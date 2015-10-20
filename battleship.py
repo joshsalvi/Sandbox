@@ -26,7 +26,6 @@ def random_col(board):
 ship_row = random_row(board)
 ship_col = random_col(board)
 
-
 # Make guess
 for turn in range(4):
     print "Turn", turn + 1

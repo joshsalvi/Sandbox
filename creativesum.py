@@ -13,4 +13,4 @@ def creativesum(data):
     return intadd(data, n, 0)
 
 
-print creativesum([1, 2, 3, 4])
+x = creativesum([1, 2, 3, 4, 5, 6, 7])
