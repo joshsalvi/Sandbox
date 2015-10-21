@@ -1,6 +1,5 @@
 def hopfstoch(mu, noiseSTD, tvec):
     import math
-    import matplotlib.pyplot as plt
     import numpy as num
 
     # Parameter initialization
@@ -38,12 +37,34 @@ def hopfstoch(mu, noiseSTD, tvec):
         ysto[ind] = ysto[ind - 1] + Dt * (2 * math.pi * xsto[ind - 1] + mu * ysto[ind - 1] - ysto[ind - 1] * (
             xsto[ind - 1] ** 2 + ysto[ind - 1] ** 2)) + noiseSTD * ydW[ind]
 
-    plt.plot(xsto)
-    plt.show()
+    return xdet, ydet, xsto, ysto
 
 
 import numpy as num
+import matplotlib.pyplot as plt
 
-hopfstoch(-0.2, 0.2, num.linspace(0, 10, 1000))
-hopfstoch(0, 0.2, num.linspace(0, 10, 1000))
-hopfstoch(0.2, 0.2, num.linspace(0, 10, 1000))
+xdet = {}
+ydet = {}
+xsto = {}
+ysto = {}
+xdet[0], ydet[0], xsto[0], ysto[0] = hopfstoch(-0.2, 0.2, num.linspace(0, 100, 10000))
+xdet[1], ydet[1], xsto[1], ysto[1] = hopfstoch(0, 0.2, num.linspace(0, 100, 10000))
+xdet[2], ydet[2], xsto[2], ysto[2] = hopfstoch(0.2, 0.2, num.linspace(0, 100, 10000))
+
+plt.figure(1)
+plt.plot(xdet[0], 'k')
+plt.plot(xsto[0], 'r')
+plt.legend(['Deterministic', 'Stochastic'])
+plt.show()
+
+plt.figure(2)
+plt.plot(xdet[1], 'k')
+plt.plot(xsto[1], 'r')
+plt.legend(['Deterministic', 'Stochastic'])
+plt.show()
+
+plt.figure(3)
+plt.plot(xdet[2], 'k')
+plt.plot(xsto[2], 'r')
+plt.legend(['Deterministic', 'Stochastic'])
+plt.show()
