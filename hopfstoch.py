@@ -7,24 +7,24 @@ def hopfstoch(mu, noiseSTD, tvec):
     yzero = -1
     Dtfac = 10 ** 2
     Dt = (tvec[1] - tvec[0]) / Dtfac
-    N = int(tvec[len(tvec) - 1] / Dt)
+    n = int(tvec[len(tvec) - 1] / Dt)
 
     # Generate random seed and values
     num.random.seed(100)
-    xdW = math.sqrt(Dt) * num.random.randn(N)
-    ydW = math.sqrt(Dt) * num.random.randn(N)
+    xdW = math.sqrt(Dt) * num.random.randn(n)
+    ydW = math.sqrt(Dt) * num.random.randn(n)
 
     # Initialize the variables
-    xdet = num.zeros(N)
+    xdet = num.zeros(n)
     xdet[0] = xzero
-    ydet = num.zeros(N)
+    ydet = num.zeros(n)
     ydet[0] = yzero
-    xsto = num.zeros(N)
+    xsto = num.zeros(n)
     xsto[0] = xzero
-    ysto = num.zeros(N)
+    ysto = num.zeros(n)
     ysto[0] = yzero
 
-    for ind in range(1, N):
+    for ind in range(1, n):
         xdet[ind] = xdet[ind - 1] + Dt * (
             mu * xdet[ind - 1] - 2 * math.pi * ydet[ind - 1] - xdet[ind - 1] * (
             xdet[ind - 1] ** 2 + ydet[ind - 1] ** 2))
@@ -47,9 +47,9 @@ xdet = {}
 ydet = {}
 xsto = {}
 ysto = {}
-xdet[0], ydet[0], xsto[0], ysto[0] = hopfstoch(-0.2, 0.2, num.linspace(0, 100, 10000))
-xdet[1], ydet[1], xsto[1], ysto[1] = hopfstoch(0, 0.2, num.linspace(0, 100, 10000))
-xdet[2], ydet[2], xsto[2], ysto[2] = hopfstoch(0.2, 0.2, num.linspace(0, 100, 10000))
+xdet[0], ydet[0], xsto[0], ysto[0] = hopfstoch(-0.2, 0.2, num.linspace(0, 30, 1000))
+xdet[1], ydet[1], xsto[1], ysto[1] = hopfstoch(0, 0.2, num.linspace(0, 30, 1000))
+xdet[2], ydet[2], xsto[2], ysto[2] = hopfstoch(0.2, 0.2, num.linspace(0, 30, 1000))
 
 plt.figure(1)
 plt.plot(xdet[0], 'k')

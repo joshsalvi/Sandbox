@@ -9,5 +9,5 @@ if __name__ == '__main__':
         return correct - precision < checked < correct + precision
 
 
-    assert almost_equal(chase(6, 3, 2), 4, 8), "example"
+    assert almost_equal(chase(6, 3, 2), 4, 7), "example"
     assert almost_equal(chase(10, 1, 10), 11.111111111, 8), "long number"

@@ -1,5 +1,9 @@
+import textwrap
+
+
 def censor(text, word1):
     return text.replace(word1, '*' * len(word1))
+
 
 paragraph = 'In those five sentences, ' \
             'President Obama not only ticked off what' \
@@ -12,11 +16,10 @@ paragraph = 'In those five sentences, ' \
             'term to be -- and to mean.'
 wordA = 'Obama'
 
-import textwrap
 print
 print 'ORIGINAL PARAGRAPH:'
-print textwrap.fill(paragraph,100)
+print textwrap.fill(paragraph, 100)
 print
 print 'CENSORED PARAGRAPH:'
-print textwrap.fill(censor(paragraph, wordA),100)
+print textwrap.fill(censor(paragraph, wordA), 100)
 print
